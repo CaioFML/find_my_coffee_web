@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-import EstablishmentsService from './services/google_list_of_establishments'
+import EstablishmentsService from './services/establishment_service'
 
 function App() {
   const { REACT_APP_GOOGLE_API_KEY } = process.env;
