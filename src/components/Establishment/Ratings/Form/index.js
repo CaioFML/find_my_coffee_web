@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
-​
+import RatingService from '../../../../services/rating';
+
 import ReactStars from "react-rating-stars-component";
 
 const NewRating = styled.div`
@@ -19,7 +20,7 @@ const TextArea = styled.textarea`
   width: 90%;
   border-width: 0;
 `
-​
+
 const Button = styled.button`
   color: white;
   background-color: #a5572f;
@@ -29,17 +30,42 @@ const Button = styled.button`
   border-color: #a5572f;
   font-weight: 800;
 `
-​
+
 const Form = (props) => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [value, setValue] = useState(1);
 
+  async function handleSubmit(e) {
+    e.preventDefault(); // Previne que seja chamado o default do submit de um form
+
+    const store_params = {
+      latitude: props.place.geometry.location.lat,
+      longitude: props.place.geometry.location.lng,
+      name: props.place.name,
+      address: props.place.formatted_address,
+      google_place_id: props.place.place_id
+    }
+
+    const rating_params = {
+      value: (value == null) ? 1 : value,
+      opinion: message,
+      user_name: name
+    }
+
+    await RatingService.create(store_params, rating_params);
+
+    // props.loadStore()
+
+    setName('');
+    setMessage('');
+  }
+
   return (
     <NewRating>
       <h4>Deixe sua Opinião</h4>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input name="name"
           type="text"
           className="input"
@@ -69,5 +95,5 @@ const Form = (props) => {
     </NewRating>
   )
 }
-​
+
 export default Form;
