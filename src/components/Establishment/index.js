@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EstablishmentsService from '../../services/establishment_service';
+import Ratings from './Ratings';
+
 import styled from 'styled-components';
 
 const LeftBar = styled.div`
@@ -72,6 +74,7 @@ const Establishment = (props) => {
       }
       <hr/>
       <Paragrahph>{establishment.formated_address}</Paragrahph>
+      <Ratings place={props.place} />
     </LeftBar>
   )
 }
